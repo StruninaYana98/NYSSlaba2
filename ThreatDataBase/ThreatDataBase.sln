@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreatDataBase", "ThreatDataBase\ThreatDataBase.csproj", "{986EA01F-29B7-4FD8-97A3-267BE4438770}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{986EA01F-29B7-4FD8-97A3-267BE4438770}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{986EA01F-29B7-4FD8-97A3-267BE4438770}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{986EA01F-29B7-4FD8-97A3-267BE4438770}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{986EA01F-29B7-4FD8-97A3-267BE4438770}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E1959AB-9279-40EB-AA4A-E9997D9E7B8B}
+	EndGlobalSection
+EndGlobal
