@@ -5,26 +5,123 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ThreatDataBase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="685" Width="1047.575"
-        ResizeMode="NoResize">
+        Title="MainWindow" Height="841" Width="1047.575"
+        Background="#FF0A132A">
+    <Window.Resources>
+        <Style x:Key="test" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="ButtonBorder" CornerRadius="25"  BorderThickness="4" Background="#17253B" BorderBrush=" #BC9CFF" >
+                            <ContentPresenter Name="ButtonContent" Content="{TemplateBinding Content}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #BC9CFF	"></Setter>
 
-    <Grid HorizontalAlignment="Left" Width="1038" Height="649" VerticalAlignment="Top">
-        <GridSplitter HorizontalAlignment="Left" Height="649" VerticalAlignment="Top" Width="198"/>
-        <Button Name ="Update"  Content="Обновить базу данных" HorizontalAlignment="Left" Margin="10,28,0,0" VerticalAlignment="Top" Width="170" Height="50" RenderTransformOrigin="1,1" Click="Update_Click">
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #BC9CFF	"></Setter>
 
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <Style x:Key="test1" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="ButtonBorder" CornerRadius="25" Background="#FF6FCF97">
+                            <ContentPresenter Content="{TemplateBinding Content}" Focusable="True"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #00AF64	"></Setter>
+
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #00AF64"></Setter>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+
+            </Setter>
+            <Style.Triggers>
+
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value= "#BC9CFF"></Setter>
+                    <Setter Property="Foreground" Value= "	#15254A"></Setter>
+                </Trigger>
+
+            </Style.Triggers>
+        </Style>
+
+        <Style  TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value=" #BC9CFF" />
+            <Setter Property="Foreground" Value="	#15254A"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style  TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="#FF0A132A" />
+        </Style>
+
+        <Style  TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="#FF0A132A" />
+            <Setter Property="Foreground" Value=" #BC9CFF" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="0,0,4,6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="551*"/>
+            <ColumnDefinition Width="141*"/>
+            <ColumnDefinition Width="344*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="757*"/>
+            <RowDefinition Height="47*"/>
+        </Grid.RowDefinitions>
+        <Image Source="wp2324421.jpg" Stretch="UniformToFill" Margin="5,0,0,0" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+        <Rectangle Fill="#17253B"  HorizontalAlignment="Left" Stroke="Black" Width="242" Grid.RowSpan="2"/>
+
+        <Button Name ="Update" Style="{StaticResource test}" Margin="24,24,0,0" VerticalAlignment="Top" Height="64" RenderTransformOrigin="1,1" Click="Update_Click" FontFamily="Verdana" FontWeight="Bold" HorizontalAlignment="Left" Width="201">
+
+            <TextBlock Text="Обновить базу данных " TextAlignment="Center" TextWrapping="Wrap" Width="142" Foreground="White" FontFamily="Tahoma" FontWeight="Bold" FontSize="14"/>
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
         </Button>
-        <Button Name ="ViewAll" Content="Просмотр всех УБИ" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="170" Height="50" Click="ViewAll_Click"/>
-        <Button Name ="ViewOne"  HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" Width="170" Height="50" Click="ViewOne_Click">
-            <TextBlock Text="Просмотр полной информации по УБИ" TextWrapping="Wrap"/>
+        <Button Name ="ViewAll" Style="{StaticResource test}" Content="Просмотр всех УБИ" Margin="24,109,0,0" VerticalAlignment="Top" Height="64" Click="ViewAll_Click" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Foreground="White" HorizontalAlignment="Left" Width="201">
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
         </Button>
-        <Button Name ="FirstUpdate" Content="Загрузить базу данных" HorizontalAlignment="Left" Margin="260,74,0,0" VerticalAlignment="Top" Width="173" Height="44" Click="FirstUpdate_Click"/>
-        <TextBlock Name="StartMessage" HorizontalAlignment="Left" Margin="234,37,0,0" TextWrapping="Wrap" Text="На Вашем компьютере отсутствует база данных по УБИ" VerticalAlignment="Top" Height="32" Width="493"/>
-        <DataGrid Name ="ThreatsList"  AutoGenerateColumns="False" HorizontalAlignment="Left" MaxHeight="580" Height="Auto" Margin="203,0,0,0" VerticalAlignment="Top" Width="820" >
-            <DataGrid.Columns >
-                <DataGridTemplateColumn Width="200" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock  Text="{Binding Idshort}" TextWrapping="Wrap"/>
+        <Button Name ="ViewOne" Style="{StaticResource test}" Margin="24,197,0,0" Click="ViewOne_Click" Height="67" VerticalAlignment="Top" HorizontalAlignment="Left" Width="201">
+            <TextBlock Text="Просмотр полной информации по УБИ" TextAlignment="Center" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="14" Foreground="White" FontWeight="Bold"/>
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
+        </Button>
+        <Button Name ="FirstUpdate" Style="{StaticResource test1}" Content="Загрузить базу данных" HorizontalAlignment="Left" Margin="283,103,0,0" VerticalAlignment="Top" Width="201" Height="59" Click="FirstUpdate_Click" Foreground="White" FontFamily="Tahoma" FontSize="14" FontWeight="Bold">
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
+        </Button>
+        <TextBlock Name="StartMessage" HorizontalAlignment="Left" Margin="263,37,0,0" TextWrapping="Wrap" Text="На Вашем компьютере отсутствует база данных по УБИ" VerticalAlignment="Top" Height="55" Width="718" Foreground="White" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="3"/>
+        <DataGrid Name ="ThreatsList"  HeadersVisibility="None" IsReadOnly="True" Height="2"  AutoGenerateColumns="False" Margin="263,10,15,0"  Background="#0A132A" BorderBrush="#FFBC9CFF" Foreground="Black" FontFamily="Tahoma" FontSize="16" BorderThickness="1" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Grid.ColumnSpan="3">
+            <DataGrid.Columns  >
+                <DataGridTemplateColumn Width="200">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
+                            <TextBlock  Background="#0A132A" Foreground="White" Text="{Binding Idshort}" MinHeight="33" TextWrapping="Wrap"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -32,20 +129,24 @@
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Text="{Binding Nameshort}" TextWrapping="Wrap"/>
+                            <TextBlock  Background="#0A132A" Foreground="White" Text="{Binding Nameshort}" MinHeight="33" TextWrapping="Wrap" IsHitTestVisible="False"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid >
-        <TextBox Name ="EnterId" HorizontalAlignment="Left" Height="37" Margin="234,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" />
-        <TextBlock Name ="EnterIdMessage" HorizontalAlignment="Left" Margin="234,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" Width="237"><Run Text="Введите идентификатор угрозы"/><Run Text=":"/></TextBlock>
-        <DataGrid Name="View" HeadersVisibility="None" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="Auto" Margin="234,143,0,0" VerticalAlignment="Top" Width="750">
+        <TextBox Name ="EnterId" HorizontalAlignment="Left" Height="32" Margin="287,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" BorderThickness="3" BorderBrush="#7887AA" Background="#5B6B8F" Foreground="White" FontWeight="Bold" FontFamily="Tahoma" FontSize="18" SelectionBrush="White">
+            <TextBox.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </TextBox.Effect>
+        </TextBox>
+        <TextBlock x:Name ="EnterIdMessage" HorizontalAlignment="Left" Margin="287,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" Width="313" Foreground="White" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2"><Run Text="Введите идентификатор угрозы"/><Run Text=":"/></TextBlock>
+        <DataGrid Name="View" IsReadOnly="True" HeadersVisibility="None" Height="4" Margin="263,193,21,0" FontFamily="Tahoma" FontSize="16" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A" Foreground="#FF0A132A"   BorderThickness="2,2,2,2"  AutoGenerateColumns="False" Grid.ColumnSpan="3" VerticalAlignment="Top">
             <DataGrid.Columns >
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Text="{Binding FieldName}" TextWrapping="Wrap"/>
+                            <TextBlock Background="#0A132A" MinHeight="30" Foreground="White" Text="{Binding FieldName}" TextWrapping="Wrap"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -53,48 +154,63 @@
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Text="{Binding Field}" TextWrapping="Wrap"/>
+                            <TextBlock   Background="#0A132A" MinHeight="30" Foreground="White" Text="{Binding Field}" TextWrapping="Wrap"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name="EnterIdButton" Content="→" HorizontalAlignment="Left" Margin="393,81,0,0" VerticalAlignment="Top" Width="40" Height="37" FontFamily="Stencil" FontSize="24" Click="EnterIdButton_Click"/>
-        <StackPanel HorizontalAlignment="Left" Height="13"  Margin="409,10,0,0" VerticalAlignment="Top" Width="11"/>
-        <Button Name="Prev" Content="&lt;" HorizontalAlignment="Left" Margin="522,594,0,20" Width="36" Click="Prev_Click"/>
-        <Button Name="Next" Content="&gt;" HorizontalAlignment="Left" Margin="661,594,0,20" Width="37" Click="Next_Click"/>
-        <TextBlock Name="Pages"  Margin="558,594,377,20" TextAlignment="Center"  VerticalAlignment="Center"   TextWrapping="Wrap" Width="103"/>
-        <TextBlock Name="UpdateStatus" HorizontalAlignment="Left" Margin="234,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="33" Width="199"/>
-        <TextBlock Name="UpdateMessage" HorizontalAlignment="Left" Margin="234,138,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="91" Width="671"/>
-        <DataGrid Name="UpdatedThreat" AutoGenerateColumns="False" Height="Auto" Margin="234,260,54,0" VerticalAlignment="Top">
+        <Button Name="EnterIdButton"  Content="&gt;" Margin="416,103,0,0" BorderThickness="3" BorderBrush="#7887AA" Background="#5B6B8F" VerticalAlignment="Top" Height="32" FontFamily="Tahoma" FontSize="16" Click="EnterIdButton_Click" Foreground="#15254A" RenderTransformOrigin="0.49,0.481" FontWeight="Bold" HorizontalAlignment="Left" Width="34">
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="40" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
+        </Button>
+        <StackPanel HorizontalAlignment="Left" Height="13"  Margin="231,10,0,0" VerticalAlignment="Top" Width="11"/>
+        <Button Name="Prev" Style="{StaticResource test1}" Content="&lt;" Margin="0,0,0,10" Click="Prev_Click" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right" Width="26" Height="26" VerticalAlignment="Bottom" Grid.Row="1"/>
+        <Button Name="Next" Style="{StaticResource test1}" Content="&gt;" Margin="0,0,0,10" Click="Next_Click" FontFamily="Tahoma" FontSize="14" FontWeight="Bold" Height="26" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="29"/>
+        <TextBlock Name="Pages"  TextAlignment="Center"  VerticalAlignment="Bottom"   TextWrapping="Wrap" Height="26" FontFamily="Tahoma" FontSize="14" Foreground="White" Margin="0,0,0,10" Grid.Column="1" Grid.Row="1" />
+        <TextBlock Name="UpdateStatus"  TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Foreground="White" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="3" Margin="263,120,0,0" HorizontalAlignment="Left" Width="551"/>
+        <TextBlock Name="UpdateMessage" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Height="64" Width="728" Foreground="White" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="3" Margin="263,161,0,0" />
+
+
+        <Button Name="UpdateButton" Content="Обновить" Style="{StaticResource test1}" Margin="287,24,0,0" Click="UpdateButton_Click" Background="#FF9CA5FF" Foreground="White" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Width="141" Height="55" VerticalAlignment="Top">
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
+
+        </Button>
+
+        <DataGrid x:Name="UpdatedThreat" IsReadOnly="True" AutoGenerateColumns="False"   Height="19" Margin="263,230,21,0"  Background="#FF0A132A"  FontFamily="Tahoma"  FontSize="14" GridLinesVisibility="None" Grid.ColumnSpan="3" VerticalAlignment="Top" >
             <DataGrid.Columns >
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Text="{Binding FieldName}" TextWrapping="Wrap"/>
+                            <TextBlock  Text="{Binding FieldName}" Background="#FF0A132A" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
 
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*">
+                <DataGridTemplateColumn Header="БЫЛО" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Text="{Binding Field }" TextWrapping="Wrap"/>
+                            <TextBlock  Text="{Binding Field}" Background="#FF0A132A" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Width="*">
+                <DataGridTemplateColumn Header="СТАЛО" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Text="{Binding UpdatedField}" TextWrapping="Wrap"/>
+                            <TextBlock  Text="{Binding UpdatedField}" Background="#FF0A132A" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name="UpdateButton" Content="Обновить" HorizontalAlignment="Left" Margin="234,39,0,0" VerticalAlignment="Top" Width="129" Height="42" Click="UpdateButton_Click" />
-        <TextBlock Name="UpdatedThreatId" HorizontalAlignment="Left" Margin="234,229,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="26" Width="226"/>
+
+
+
+
 
     </Grid>
 </Window>
