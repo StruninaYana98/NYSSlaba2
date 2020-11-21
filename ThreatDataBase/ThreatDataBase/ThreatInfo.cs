@@ -8,7 +8,7 @@
         public string Source { get; set; }
         public string Target { get; set; }
         public string BreachOfConfid { get; set; }
-        public string IntegrityViolation { get; set; }
+        public string IntegrityViolation { get; set; } 
         public string AccessibilityViolation { get; set; }
 
 

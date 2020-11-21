@@ -5,16 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ThreatDataBase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="841" Width="1047.575"
-        Background="#FF0A132A">
+        
+        Title="База данных УБИ" MinHeight="800" MinWidth="1200"
+        Background="	#15254A" Width="1020" >
+
     <Window.Resources>
         <Style x:Key="test" TargetType="Button">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
+
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Name="ButtonBorder" CornerRadius="25"  BorderThickness="4" Background="#17253B" BorderBrush=" #BC9CFF" >
+                        <Border Name="ButtonBorder" CornerRadius="25"  BorderThickness="4"  BorderBrush=" #BC9CFF" >
                             <ContentPresenter Name="ButtonContent" Content="{TemplateBinding Content}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -23,7 +25,7 @@
 
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #BC9CFF	"></Setter>
+                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #9839D5"></Setter>
 
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -42,11 +44,11 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #00AF64	"></Setter>
+                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #FF8A28"></Setter>
 
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= " #00AF64"></Setter>
+                                <Setter  TargetName="ButtonBorder" Property="Background"  Value= "#FF6239"></Setter>
 
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -86,10 +88,11 @@
             <ColumnDefinition Width="344*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="757*"/>
-            <RowDefinition Height="47*"/>
+            <RowDefinition Height="75*"/>
+            <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <Image Source="wp2324421.jpg" Stretch="UniformToFill" Margin="5,0,0,0" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+
+        <Image Name="Img" Source="wp2324421.jpg" Stretch="UniformToFill" Margin="5,0,0,0" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
         <Rectangle Fill="#17253B"  HorizontalAlignment="Left" Stroke="Black" Width="242" Grid.RowSpan="2"/>
 
         <Button Name ="Update" Style="{StaticResource test}" Margin="24,24,0,0" VerticalAlignment="Top" Height="64" RenderTransformOrigin="1,1" Click="Update_Click" FontFamily="Verdana" FontWeight="Bold" HorizontalAlignment="Left" Width="201">
@@ -98,30 +101,46 @@
             <Button.Effect>
                 <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
             </Button.Effect>
+
         </Button>
-        <Button Name ="ViewAll" Style="{StaticResource test}" Content="Просмотр всех УБИ" Margin="24,109,0,0" VerticalAlignment="Top" Height="64" Click="ViewAll_Click" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Foreground="White" HorizontalAlignment="Left" Width="201">
+        <Rectangle Name="Rect1"  Fill="#FFBC9CFF" Height="12" Margin="225,50,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="17">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <Button Name ="ViewAll" Style="{StaticResource test}" Content="Просмотр всех УБИ" Margin="24,120,0,0" VerticalAlignment="Top" Height="67" Click="ViewAll_Click" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Foreground="White" HorizontalAlignment="Left" Width="201">
             <Button.Effect>
                 <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
             </Button.Effect>
         </Button>
-        <Button Name ="ViewOne" Style="{StaticResource test}" Margin="24,197,0,0" Click="ViewOne_Click" Height="67" VerticalAlignment="Top" HorizontalAlignment="Left" Width="201">
+        <Rectangle Name="Rect2" Fill="#FFBC9CFF" Height="12" Margin="225,150,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="17" RenderTransformOrigin="0.471,1">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <Button Name ="ViewOne" Style="{StaticResource test}" Margin="24,212,0,0" Click="ViewOne_Click" Height="67" VerticalAlignment="Top" HorizontalAlignment="Left" Width="201">
             <TextBlock Text="Просмотр полной информации по УБИ" TextAlignment="Center" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="14" Foreground="White" FontWeight="Bold"/>
             <Button.Effect>
                 <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
             </Button.Effect>
         </Button>
+        <Rectangle Name="Rect3" Fill="#FFBC9CFF" Height="12" Margin="225,237,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="17" RenderTransformOrigin="0.471,1">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Rectangle.Effect>
+        </Rectangle>
         <Button Name ="FirstUpdate" Style="{StaticResource test1}" Content="Загрузить базу данных" HorizontalAlignment="Left" Margin="283,103,0,0" VerticalAlignment="Top" Width="201" Height="59" Click="FirstUpdate_Click" Foreground="White" FontFamily="Tahoma" FontSize="14" FontWeight="Bold">
             <Button.Effect>
                 <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
             </Button.Effect>
         </Button>
-        <TextBlock Name="StartMessage" HorizontalAlignment="Left" Margin="263,37,0,0" TextWrapping="Wrap" Text="На Вашем компьютере отсутствует база данных по УБИ" VerticalAlignment="Top" Height="55" Width="718" Foreground="White" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="3"/>
-        <DataGrid Name ="ThreatsList"  HeadersVisibility="None" IsReadOnly="True" Height="2"  AutoGenerateColumns="False" Margin="263,10,15,0"  Background="#0A132A" BorderBrush="#FFBC9CFF" Foreground="Black" FontFamily="Tahoma" FontSize="16" BorderThickness="1" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Grid.ColumnSpan="3">
+        <TextBlock x:Name="StartMessage" Margin="263,37,30,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="78" Foreground="White" FontFamily="Tahoma" FontSize="20" FontWeight="Bold" Grid.ColumnSpan="3"><Run Text="На Вашем компьютере отсутствует база данных по УБИ"/></TextBlock>
+        <DataGrid Name ="ThreatsList"  HeadersVisibility="None" IsReadOnly="True" Height="Auto"  AutoGenerateColumns="False" Margin="263,10,15,0"  Background="#0A132A" BorderBrush="#FFBC9CFF" Foreground="Black" FontFamily="Tahoma" FontSize="16" BorderThickness="1" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top" Grid.ColumnSpan="3">
             <DataGrid.Columns  >
                 <DataGridTemplateColumn Width="200">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            <TextBlock  Background="#0A132A" Foreground="White" Text="{Binding Idshort}" MinHeight="33" TextWrapping="Wrap"/>
+                            <TextBlock  Background="#0A132A" Foreground="White" Text="{Binding Idshort}" MinHeight="40" TextWrapping="Wrap"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -129,7 +148,7 @@
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Background="#0A132A" Foreground="White" Text="{Binding Nameshort}" MinHeight="33" TextWrapping="Wrap" IsHitTestVisible="False"/>
+                            <TextBlock  Background="#0A132A" Foreground="White" Text="{Binding Nameshort}" MinHeight="40" TextWrapping="Wrap" IsHitTestVisible="False"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -141,12 +160,12 @@
             </TextBox.Effect>
         </TextBox>
         <TextBlock x:Name ="EnterIdMessage" HorizontalAlignment="Left" Margin="287,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" Width="313" Foreground="White" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2"><Run Text="Введите идентификатор угрозы"/><Run Text=":"/></TextBlock>
-        <DataGrid Name="View" IsReadOnly="True" HeadersVisibility="None" Height="4" Margin="263,193,21,0" FontFamily="Tahoma" FontSize="16" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A" Foreground="#FF0A132A"   BorderThickness="2,2,2,2"  AutoGenerateColumns="False" Grid.ColumnSpan="3" VerticalAlignment="Top">
+        <DataGrid Name="View" IsReadOnly="True" HeadersVisibility="None"  Height="Auto" Margin="263,193,21,0" VerticalScrollBarVisibility="Hidden" FontFamily="Tahoma" FontSize="16" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A" Foreground="#FF0A132A"   BorderThickness="2,2,2,2"  AutoGenerateColumns="False" Grid.ColumnSpan="3" VerticalAlignment="Top">
             <DataGrid.Columns >
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Background="#0A132A" MinHeight="30" Foreground="White" Text="{Binding FieldName}" TextWrapping="Wrap"/>
+                            <TextBlock Background="#0A132A" MinHeight="40" Foreground="White" Text="{Binding FieldName}" TextWrapping="Wrap"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -154,7 +173,7 @@
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock   Background="#0A132A" MinHeight="30" Foreground="White" Text="{Binding Field}" TextWrapping="Wrap"/>
+                            <TextBlock   Background="#0A132A" MinHeight="40" Foreground="White" Text="{Binding Field}" TextWrapping="Wrap"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -166,51 +185,101 @@
             </Button.Effect>
         </Button>
         <StackPanel HorizontalAlignment="Left" Height="13"  Margin="231,10,0,0" VerticalAlignment="Top" Width="11"/>
-        <Button Name="Prev" Style="{StaticResource test1}" Content="&lt;" Margin="0,0,0,10" Click="Prev_Click" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right" Width="26" Height="26" VerticalAlignment="Bottom" Grid.Row="1"/>
-        <Button Name="Next" Style="{StaticResource test1}" Content="&gt;" Margin="0,0,0,10" Click="Next_Click" FontFamily="Tahoma" FontSize="14" FontWeight="Bold" Height="26" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="29"/>
-        <TextBlock Name="Pages"  TextAlignment="Center"  VerticalAlignment="Bottom"   TextWrapping="Wrap" Height="26" FontFamily="Tahoma" FontSize="14" Foreground="White" Margin="0,0,0,10" Grid.Column="1" Grid.Row="1" />
-        <TextBlock Name="UpdateStatus"  TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Foreground="White" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="3" Margin="263,120,0,0" HorizontalAlignment="Left" Width="551"/>
-        <TextBlock Name="UpdateMessage" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Height="64" Width="728" Foreground="White" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="3" Margin="263,161,0,0" />
 
-
+        <Button Name="Prev" Style="{StaticResource test1}" Content="&lt;" Margin="0,0,0,10" Click="Prev_Click" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" HorizontalAlignment="Right" Width="35" Height="37" VerticalAlignment="Bottom" Grid.Row="1">
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="40" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
+        </Button>
+        <Button Name="Next" Style="{StaticResource test1}" Content="&gt;" Margin="0,0,0,10" Click="Next_Click" FontFamily="Tahoma" FontSize="14" FontWeight="Bold" Height="37" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="36">
+            <Button.Effect>
+                <DropShadowEffect Color="#FFBC9CFF" BlurRadius="40" Opacity="0.8" Direction="20" ShadowDepth="0"/>
+            </Button.Effect>
+        </Button>
+        <TextBlock Name="Pages"  TextAlignment="Center"  VerticalAlignment="Bottom"   TextWrapping="Wrap" Height="37" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Foreground="White" Margin="0,0,0,10" Grid.Column="1" Grid.Row="1" />
+        <TextBlock Name="UpdateStatus"  TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Foreground="White" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="3" Margin="270,125,0,0" HorizontalAlignment="Left" Width="551"/>
+        <TextBlock Name="UpdateMessage" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Top" Height="64" Width="728" Foreground="White" FontFamily="Tahoma" FontWeight="Bold" FontSize="14" Grid.ColumnSpan="3" Margin="270,166,0,0" />
         <Button Name="UpdateButton" Content="Обновить" Style="{StaticResource test1}" Margin="287,24,0,0" Click="UpdateButton_Click" Background="#FF9CA5FF" Foreground="White" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Width="141" Height="55" VerticalAlignment="Top">
             <Button.Effect>
                 <DropShadowEffect Color="#FFBC9CFF" BlurRadius="30" Opacity="0.8" Direction="20" ShadowDepth="0"/>
             </Button.Effect>
-
         </Button>
 
-        <DataGrid x:Name="UpdatedThreat" IsReadOnly="True" AutoGenerateColumns="False"   Height="19" Margin="263,230,21,0"  Background="#FF0A132A"  FontFamily="Tahoma"  FontSize="14" GridLinesVisibility="None" Grid.ColumnSpan="3" VerticalAlignment="Top" >
+        <DataGrid x:Name="UpdatedThreat" IsReadOnly="True"  HeadersVisibility="None" AutoGenerateColumns="False"   Height="Auto" Margin="263,230,21,0" VerticalScrollBarVisibility="Hidden" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A"  FontFamily="Tahoma"  FontSize="14" GridLinesVisibility="All" Grid.ColumnSpan="3" VerticalAlignment="Top" >
             <DataGrid.Columns >
+                <DataGridTemplateColumn Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock   MinHeight="40" Text="{Binding Id}"  Background="#FF0A132A" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock  Text="{Binding FieldName}" Background="#FF0A132A" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" MinHeight="40" Foreground="#FFBC9CFF"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Text="ПОЛЕ" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" MinHeight="40" Foreground="#FFBC9CFF"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Text="БЫЛО" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="0" Grid.Column="2" MinHeight="40" Foreground="#FFBC9CFF"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Text="СТАЛО" VerticalAlignment="Center" />
 
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="БЫЛО" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock  Text="{Binding Field}" Background="#FF0A132A" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                <Line Grid.Row="1" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Name}" VerticalAlignment="Center" />
+                                <Line Grid.Row="3" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Description}" VerticalAlignment="Center" />
+                                <Line Grid.Row="5" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="6" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Source}" VerticalAlignment="Center" />
+                                <Line Grid.Row="7" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="8" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Target}" VerticalAlignment="Center" />
+                                <Line Grid.Row="9" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="10" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.BreachOfConfid}" VerticalAlignment="Center" />
+                                <Line Grid.Row="11" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="12"  Grid.Column="0" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.IntegrityViolation}" VerticalAlignment="Center" />
+                                <Line Grid.Row="13" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="14" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.AccessibilityViolation}" VerticalAlignment="Center" />
 
-                <DataGridTemplateColumn Header="СТАЛО" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock  Text="{Binding UpdatedField}" Background="#FF0A132A" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Name}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="4" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Description}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="6" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Source}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="8" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Target}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="10" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.BreachOfConfid}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="12" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.IntegrityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="14" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.AccessibilityViolation}" VerticalAlignment="Center" />
+
+                                <TextBlock Grid.Row="2" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Name}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="4" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Description}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="6" Grid.Column="2"   MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Source}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="8" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Target}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="10" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.BreachOfConfid}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="12" Grid.Column="2" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.IntegrityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="14" Grid.Column="2" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.AccessibilityViolation}" VerticalAlignment="Center" />
+                            </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-
-
-
-
     </Grid>
 </Window>

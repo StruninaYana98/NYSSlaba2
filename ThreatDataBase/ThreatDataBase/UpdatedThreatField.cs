@@ -1,10 +1,12 @@
-﻿namespace ThreatDataBase
+﻿using System.Collections.Generic;
+namespace ThreatDataBase
 {
     class UpdatedThreatField
     {
-        public string FieldName { get; set; }
-        public string Field { get; set; }
-        public string UpdatedField { get; set; }
+        public string  Id{get;set;}
+        public ThreatInfo FieldName { get; set; } = new ThreatInfo(0, "", "", "", "", "", "", "");
+        public ThreatInfo Field { get; set; } = new ThreatInfo(0, "", "", "", "", "", "", "");
+        public ThreatInfo UpdatedField { get; set; } = new ThreatInfo(0, "", "", "", "", "", "", "");
     }
 
 }
