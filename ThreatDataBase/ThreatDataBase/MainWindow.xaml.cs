@@ -609,7 +609,7 @@ namespace ThreatDataBase
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var timer = new System.Windows.Threading.DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Interval = new TimeSpan(0, 1, 0);
             timer.IsEnabled = true;
             timer.Tick += (o, t) => 
             {
