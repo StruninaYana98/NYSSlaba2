@@ -206,7 +206,7 @@
             </Button.Effect>
         </Button>
 
-        <DataGrid x:Name="UpdatedThreat" IsReadOnly="True"  HeadersVisibility="None" AutoGenerateColumns="False"   Height="Auto" Margin="263,230,21,0" VerticalScrollBarVisibility="Hidden" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A"  FontFamily="Tahoma"  FontSize="14" GridLinesVisibility="All" Grid.ColumnSpan="3" VerticalAlignment="Top" >
+        <DataGrid x:Name="UpdatedThreat" IsReadOnly="True"  HeadersVisibility="None" AutoGenerateColumns="False"   Height="Auto" Margin="263,230,21,0"  HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A"  FontFamily="Tahoma"  FontSize="14" GridLinesVisibility="All" Grid.ColumnSpan="3" VerticalAlignment="Top" >
             <DataGrid.Columns >
                 <DataGridTemplateColumn Width="100">
                     <DataGridTemplateColumn.CellTemplate>
@@ -238,7 +238,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="170"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
@@ -247,35 +247,35 @@
                                 <TextBlock Grid.Row="0" Grid.Column="2" MinHeight="40" Foreground="#FFBC9CFF"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Text="СТАЛО" VerticalAlignment="Center" />
 
                                 <Line Grid.Row="1" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="2" Grid.Column="0" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Name}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="2" Grid.Column="0" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="Наименование угрозы" VerticalAlignment="Center" />
                                 <Line Grid.Row="3" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="4" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Description}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="4" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="Описание угрозы" VerticalAlignment="Center" />
                                 <Line Grid.Row="5" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="6" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Source}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="6" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="Источник угрозы" VerticalAlignment="Center" />
                                 <Line Grid.Row="7" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="8" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.Target}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="8" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="Объект воздействия угрозы" VerticalAlignment="Center" />
                                 <Line Grid.Row="9" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="10" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.BreachOfConfid}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="10" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="Нарушение конфиденциальности" VerticalAlignment="Center" />
                                 <Line Grid.Row="11" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="12"  Grid.Column="0" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.IntegrityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="12"  Grid.Column="0" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="Нарушение целостности" VerticalAlignment="Center" />
                                 <Line Grid.Row="13" Grid.ColumnSpan="3" Stroke="#FFBC9CFF" Stretch="Fill" X2="1" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="14" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=FieldName.AccessibilityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="14" Grid.Column="0"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="Нарушение доступности" VerticalAlignment="Center" />
 
-                                <TextBlock Grid.Row="2" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Name}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="4" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Description}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="6" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Source}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="8" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.Target}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="10" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.BreachOfConfid}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="12" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.IntegrityViolation}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="14" Grid.Column="1"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Field.AccessibilityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="2" Grid.Column="1"  MinHeight="40" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Fields.Name}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="4" Grid.Column="1"  MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Fields.Description}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="6" Grid.Column="1"  MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Fields.Source}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="8" Grid.Column="1"  MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Fields.Target}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="10" Grid.Column="1"  MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Fields.BreachOfConfid}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="12" Grid.Column="1"  MinHeight="40" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Fields.IntegrityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="14" Grid.Column="1"  MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=Fields.AccessibilityViolation}" VerticalAlignment="Center" />
 
-                                <TextBlock Grid.Row="2" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Name}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="4" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Description}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="6" Grid.Column="2"   MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Source}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="8" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.Target}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="10" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.BreachOfConfid}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="12" Grid.Column="2" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.IntegrityViolation}" VerticalAlignment="Center" />
-                                <TextBlock Grid.Row="14" Grid.Column="2" MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedField.AccessibilityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="2" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedFields.Name}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="4" Grid.Column="2"  MinHeight="40" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedFields.Description}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="6" Grid.Column="2"   MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedFields.Source}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="8" Grid.Column="2"  MinHeight="40" Foreground="White"  TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedFields.Target}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="10" Grid.Column="2"  MinHeight="40" Foreground="White" TextWrapping="Wrap" FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedFields.BreachOfConfid}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="12" Grid.Column="2" MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedFields.IntegrityViolation}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="14" Grid.Column="2" MinHeight="40" Foreground="White" TextWrapping="Wrap"  FontFamily="Tahoma" FontSize="16" FontWeight="Normal" Text="{Binding Path=UpdatedFields.AccessibilityViolation}" VerticalAlignment="Center" />
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -28,39 +28,49 @@ namespace ThreatDataBase
 
         WebClient wc = new WebClient();
         Excel.Application ObjWorkExcel = new Excel.Application();
-        static Dictionary<int, ThreatInfo> list = new Dictionary<int, ThreatInfo>();
-        static Dictionary<int, ThreatInfo> updatedlist = new Dictionary<int, ThreatInfo>();
-        static ObservableCollection<UpdatedThreatField> updatedfields = new ObservableCollection<UpdatedThreatField>();
-        static ObservableCollection<ThreatShortInfo> shortlist = new ObservableCollection<ThreatShortInfo>();
-        static List<ThreatShortInfo> bufferlist = new List<ThreatShortInfo>();
-        static List<int> updatedIds = new List<int>();
+
+        static Dictionary<int, ThreatInfo> list = new Dictionary<int, ThreatInfo>();//хранит полную информацию
+
+        static Dictionary<int, ThreatInfo> updatedlist = new Dictionary<int, ThreatInfo>();//хранит обновленную полную информацию
+        static List<int> updatedIds = new List<int>();//список id обновленных записей
+        static ObservableCollection<UpdatedThreatField> updatedfields = new ObservableCollection<UpdatedThreatField>();//для вывода обновленной информации в таблицу
+
+        static ObservableCollection<ThreatShortInfo> shortlist = new ObservableCollection<ThreatShortInfo>();//вся краткая информация для таблицы
+        static ObservableCollection<ThreatShortInfo> bufferlist = new ObservableCollection<ThreatShortInfo>();//краткая информация для одной страницы
+
+        //флаги для смены режимов
         static bool isViewAllopen = false;
         static bool isViewOneopen = false;
         static bool isUpdateopen = false;
-        static int page = 0;
-        string path = Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx";
+
+        static int page = 0;//номер страницы таблицы с краткой информацией
+
+
+        static int min = 60;//счетчик автообновления
         public MainWindow()
         {
             InitializeComponent();
             HideElements();
-           
-           
+
+
             StartMessage.Visibility = Visibility.Visible;
             Img.Visibility = Visibility.Visible;
+
+            //-----------Загрузка БД из файла SavedThreatBase, если он существует--------------
+
             if (File.Exists(Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx"))
             {
-
-                StartMessage.Text = $"На вашем компьютере существует загруженная база угроз ИБ\n";
-
                 FromExcelToList(Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx", list);
-
+                StartMessage.Text = $"На вашем компьютере существует загруженная база угроз ИБ\n";
                 StartMessage.Text += $"Всего записей в базе данных: {list.Count}";
-                if(File.Exists(Directory.GetCurrentDirectory() + "\\updatedate.txt"))
+                if (File.Exists(Directory.GetCurrentDirectory() + "\\savedupdatedate.txt"))
                 {
-                    UpdateDate.Text = "Последнее обновление: " + File.ReadAllText(Directory.GetCurrentDirectory() + "\\updatedate.txt");
+                    UpdateDate.Text = "Последнее обновление: " + File.ReadAllText(Directory.GetCurrentDirectory() + "\\savedupdatedate.txt");
                 }
+                Timer.Text = $"\nСледующее автоматическое обновление через {min} минут";
 
             }
+            //--------------Кнопка для первичной загрузки, если файла SavedThreatBase нет---------------
             else
             {
                 StartMessage.Text = $"На Вашем компьютере отсутствует база данных по УБИ\nПожалуйста, загрузите базу данных\n";
@@ -68,22 +78,22 @@ namespace ThreatDataBase
             }
         }
 
-       
-        private void FirstUpdate_Click(object sender, RoutedEventArgs e)
+
+        private void FirstUpdate_Click(object sender, RoutedEventArgs e)   // Кнопка первичной загрузки
         {
 
             try
             {
-                wc.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", path);
-                FromExcelToList(path, list);
+                wc.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx");
+                FromExcelToList(Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx", list);
                 FirstUpdate.Visibility = Visibility.Collapsed;
-                
+
                 StartMessage.Text = $"На вашем компьютере существует загруженная база угроз ИБ\n";
                 StartMessage.Text += $"Всего записей в базе данных: {list.Count}";
-                
-                File.WriteAllText(Directory.GetCurrentDirectory() + "\\updatedate.txt", DateTime.Now.ToString());
-                UpdateDate.Text = "Последнее обновление: " + File.ReadAllText(Directory.GetCurrentDirectory() + "\\updatedate.txt");
 
+                File.WriteAllText(Directory.GetCurrentDirectory() + "\\updatedate.txt", DateTime.Now.ToString()); // Запись даты-времени обновления
+                UpdateDate.Text = "Последнее обновление: " + File.ReadAllText(Directory.GetCurrentDirectory() + "\\updatedate.txt");
+                Timer.Text = $"\nСледующее автоматическое обновление через {min} минут";
 
             }
             catch (Exception ex)
@@ -93,7 +103,7 @@ namespace ThreatDataBase
 
         }
 
-        private void FromExcelToList(string p, Dictionary<int, ThreatInfo> l)
+        private void FromExcelToList(string p, Dictionary<int, ThreatInfo> l) // Запись информации их excel в списки
         {
 
 
@@ -137,9 +147,9 @@ namespace ThreatDataBase
                     accessibilityViolation = "нет";
                 }
                 ThreatInfo ti = new ThreatInfo(id, name, description, source, target, breachOfConfid, integrityViolation, accessibilityViolation);
-                l.Add(id, ti);
+                l.Add(id, ti);  // Запись полной информации в список
                 ThreatShortInfo shortti = new ThreatShortInfo("УБИ." + id, name);
-                shortlist.Add(shortti);
+                shortlist.Add(shortti); // Запись краткой информации в список для вывода в таблицу 
 
 
             }
@@ -150,38 +160,52 @@ namespace ThreatDataBase
 
         }
 
-        private void ViewAll_Click(object sender, RoutedEventArgs e)
+        private void ViewAll_Click(object sender, RoutedEventArgs e) // Кнопка "Просмотр всех УБИ"
         {
             if (list.Count != 0)
             {
                 HideElements();
-
+                //-------Закрытие остальных страниц-------
                 isViewOneopen = false;
                 isUpdateopen = false;
+
                 if (isViewAllopen == false)
                 {
-                    Rect2.Visibility = Visibility.Visible;
+                    //------Открытие страницы-----
+                    isViewAllopen = true;
 
+                    //------Показ всех UI  элементов страницы----
+                    Rect2.Visibility = Visibility.Visible;
                     ThreatsList.Visibility = Visibility.Visible;
                     Prev.Visibility = Visibility.Visible;
                     Next.Visibility = Visibility.Visible;
                     Pages.Visibility = Visibility.Visible;
-                    isViewAllopen = true;
-                    bufferlist = new List<ThreatShortInfo>();
-                    for (int i = 0; i < 20; i++)
+
+                    //--------Вывод первых 20 (или менее) записей в таблицу---------
+                    bufferlist.Clear();
+                    if (shortlist.Count >= 20)
                     {
-                        bufferlist.Add(shortlist[i]);
+                        for (int i = 0; i < 20; i++)
+                        {
+                            bufferlist.Add(shortlist[i]);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < shortlist.Count; i++)
+                        {
+                            bufferlist.Add(shortlist[i]);
+                        }
                     }
                     ThreatsList.ItemsSource = bufferlist;
-                    Pages.Text = "1 - 20 из " + shortlist.Count;
+                    Pages.Text = $"1 - {bufferlist.Count} из " + shortlist.Count;
                 }
                 else
                 {
-                    ThreatsList.Visibility = Visibility.Collapsed;
-                    Rect2.Visibility = Visibility.Collapsed;
+                    //-------Закрытие страницы-------
                     isViewAllopen = false;
+
                     StartMessage.Visibility = Visibility.Visible;
-                    Img.Visibility = Visibility.Visible;
                     Img.Visibility = Visibility.Visible;
 
                 }
@@ -193,15 +217,12 @@ namespace ThreatDataBase
 
         }
 
-        private void EnterIdButton_Click(object sender, RoutedEventArgs e)
+        private void EnterIdButton_Click(object sender, RoutedEventArgs e) // Кнопка для ввода ID записи для показа полной информации
         {
-
-            EnterId.Visibility = Visibility.Visible;
-            EnterIdButton.Visibility = Visibility.Visible;
             View.Visibility = Visibility.Collapsed;
             string s = EnterId.Text;
             int id;
-            List<ThreatField> fields = new List<ThreatField>();
+            ObservableCollection<ThreatField> fields = new ObservableCollection<ThreatField>(); // Список для вывода полной информации по одной записи в таблицу
 
             if (!Int32.TryParse(s, out id))
             {
@@ -210,9 +231,10 @@ namespace ThreatDataBase
             }
             else
             {
-                if (updatedlist.Count == 0 && !list.ContainsKey(id) || updatedlist.Count != 0 && !updatedlist.ContainsKey(id))
+                if (!list.ContainsKey(id))
                 {
                     MessageBox.Show("УБИ с данным модификатором отсутствует!");
+                    EnterId.Text = "";
                 }
                 else
                 {
@@ -235,7 +257,7 @@ namespace ThreatDataBase
             }
 
         }
-        private void HideElements()
+        private void HideElements() // Скрытие всех ненужных элементов
         {
             FirstUpdate.Visibility = Visibility.Collapsed;
             StartMessage.Visibility = Visibility.Collapsed;
@@ -249,7 +271,6 @@ namespace ThreatDataBase
             Pages.Visibility = Visibility.Collapsed;
             UpdateButton.Visibility = Visibility.Collapsed;
             UpdatedThreat.Visibility = Visibility.Collapsed;
-
             UpdateMessage.Visibility = Visibility.Collapsed;
             UpdateStatus.Visibility = Visibility.Collapsed;
             Rect1.Visibility = Visibility.Collapsed;
@@ -259,33 +280,34 @@ namespace ThreatDataBase
             page = 0;
         }
 
-        private void ViewOne_Click(object sender, RoutedEventArgs e)
+        private void ViewOne_Click(object sender, RoutedEventArgs e) // Кнопка "Просмотр полной информации по УБИ
         {
             if (list.Count != 0)
             {
                 HideElements();
+
+                //-------Зактырие остальных страниц---------
                 isViewAllopen = false;
                 isUpdateopen = false;
 
                 EnterId.Text = "";
                 if (isViewOneopen == false)
+
                 {
+                    isViewOneopen = true;
+
+                    //--------Показ всех элементов страницы---------
                     EnterId.Visibility = Visibility.Visible;
                     EnterIdButton.Visibility = Visibility.Visible;
                     EnterIdMessage.Visibility = Visibility.Visible;
                     Rect3.Visibility = Visibility.Visible;
-                    isViewOneopen = true;
+
                 }
                 else
                 {
-                    EnterId.Visibility = Visibility.Collapsed;
-                    EnterIdButton.Visibility = Visibility.Collapsed;
-                    EnterIdMessage.Visibility = Visibility.Collapsed;
-                    Rect3.Visibility = Visibility.Collapsed;
-                    View.Visibility = Visibility.Collapsed;
+
                     isViewOneopen = false;
                     StartMessage.Visibility = Visibility.Visible;
-
                     Img.Visibility = Visibility.Visible;
                 }
             }
@@ -295,12 +317,12 @@ namespace ThreatDataBase
             }
         }
 
-        private void Prev_Click(object sender, RoutedEventArgs e)
+        private void Prev_Click(object sender, RoutedEventArgs e) // Кнопка пагинации "назад"
         {
             if (page > 0)
             {
                 page--;
-                bufferlist = new List<ThreatShortInfo>();
+                bufferlist.Clear();
                 if (page * 20 + 20 <= shortlist.Count - 1)
                 {
                     for (int i = page * 20; i < page * 20 + 20; i++)
@@ -321,12 +343,12 @@ namespace ThreatDataBase
             }
         }
 
-        private void Next_Click(object sender, RoutedEventArgs e)
+        private void Next_Click(object sender, RoutedEventArgs e)  // Кнопка пагинации "вперед"
         {
             if ((page + 1) * 20 <= shortlist.Count - 1)
             {
                 page++;
-                bufferlist = new List<ThreatShortInfo>();
+                bufferlist.Clear();
                 if (page * 20 + 20 <= shortlist.Count - 1)
                 {
                     for (int i = page * 20; i < page * 20 + 20; i++)
@@ -347,21 +369,26 @@ namespace ThreatDataBase
             }
         }
 
-        private void Update_Click(object sender, RoutedEventArgs e)
+        private void Update_Click(object sender, RoutedEventArgs e) // Кнопка "Обновить базу данных"
         {
             if (list.Count != 0)
             {
                 HideElements();
+
+                //-------Закрытие остальных страниц--------
                 isViewAllopen = false;
                 isViewOneopen = false;
 
                 if (isUpdateopen == false)
                 {
                     isUpdateopen = true;
+
+                    //-------Показывает таблицу с последними обновлениями, если они были--------
                     if (updatedfields.Count != 0)
                     {
                         UpdatedThreat.Visibility = Visibility.Visible;
                     }
+
                     UpdateButton.Visibility = Visibility.Visible;
                     Rect1.Visibility = Visibility.Visible;
                     UpdateStatus.Visibility = Visibility.Visible;
@@ -370,7 +397,6 @@ namespace ThreatDataBase
                 }
                 else
                 {
-                    Rect1.Visibility = Visibility.Collapsed;
                     isUpdateopen = false;
                     StartMessage.Visibility = Visibility.Visible;
                     Img.Visibility = Visibility.Visible;
@@ -383,24 +409,24 @@ namespace ThreatDataBase
 
         }
 
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateButton_Click(object sender, RoutedEventArgs e) // Кнопка "Обновить"
         {
-            UpdateStatus.Visibility = Visibility.Collapsed;
-            UpdateMessage.Visibility = Visibility.Collapsed;
-            UpdatedThreat.Visibility = Visibility.Collapsed;
-
             updatedfields.Clear();
-            min = 60;
 
+            //--------Отсчет для автообновления начинается заново--------
+            min = 60;
+            Timer.Text = $"\nСледующее автоматическое обновление через {min} минут";
 
             try
             {
-                 wc.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", Directory.GetCurrentDirectory() + "\\UpdatedThreatBase.xlsx");
+                //------Скачиваем в другой файл, чтобы в случае ошибки предыдущее успешное обновление осталось--------
+                wc.DownloadFile("https://bdu.fstec.ru/files/documents/thrlist.xlsx", Directory.GetCurrentDirectory() + "\\UpdatedThreatBase.xlsx");
+
                 updatedIds.Clear();
                 int count = 0;
                 FromExcelToList(Directory.GetCurrentDirectory() + "\\UpdatedThreatBase.xlsx", updatedlist);
 
-
+                //-----------Находим ID всех измененных записей------
                 foreach (var item in list)
                 {
                     if (!updatedlist.ContainsKey(item.Key) || !item.Value.Equals(updatedlist[item.Key]))
@@ -419,6 +445,7 @@ namespace ThreatDataBase
                         updatedIds.Add(item.Key);
                     }
                 }
+
                 UpdateStatus.Visibility = Visibility.Visible;
                 UpdateStatus.Text = "База данных загружена успешно!";
                 UpdateMessage.Visibility = Visibility.Visible;
@@ -426,154 +453,139 @@ namespace ThreatDataBase
 
                 if (updatedIds.Count != 0)
                 {
-
-
-
                     for (int i = 0; i < updatedIds.Count; i++)
                     {
                         UpdatedThreatField threatField = new UpdatedThreatField();
                         threatField.Id = "УБИ." + updatedIds[i].ToString();
 
-                        threatField.FieldName.Name = "Наименование угрозы";
-                        threatField.FieldName.Description = "Описание угрозы";
-                        threatField.FieldName.Source = "Источник угрозы";
-
-                        threatField.FieldName.Target = "Объект воздействия угрозы";
-                        threatField.FieldName.BreachOfConfid = "Нарушение конфиденциальности";
-                        threatField.FieldName.IntegrityViolation = "Нарушение целостности";
-                        threatField.FieldName.AccessibilityViolation = "Нарушение доступности";
-
+                        //---------Если была изменена существующая запись---------
                         if (list.ContainsKey(updatedIds[i]) && updatedlist.ContainsKey(updatedIds[i]))
                         {
 
+                            threatField.Fields.Name = "нет изменений";
+                            threatField.UpdatedFields.Name = "нет изменений";
 
-                            threatField.Field.Name = "нет изменений";
-                            threatField.UpdatedField.Name = "нет изменений";
+                            threatField.Fields.Description = "нет изменений";
+                            threatField.UpdatedFields.Description = "нет изменений";
 
-                            threatField.Field.Description = "нет изменений";
-                            threatField.UpdatedField.Description = "нет изменений";
+                            threatField.Fields.Source = "нет изменений";
+                            threatField.UpdatedFields.Source = "нет изменений";
 
-                            threatField.Field.Source = "нет изменений";
-                            threatField.UpdatedField.Source = "нет изменений";
+                            threatField.Fields.Target = "нет изменений";
+                            threatField.UpdatedFields.Target = "нет изменений";
 
-                            threatField.Field.Target = "нет изменений";
-                            threatField.UpdatedField.Target = "нет изменений";
-
-                            threatField.Field.BreachOfConfid = "нет изменений";
-                            threatField.UpdatedField.BreachOfConfid = "нет изменений";
+                            threatField.Fields.BreachOfConfid = "нет изменений";
+                            threatField.UpdatedFields.BreachOfConfid = "нет изменений";
 
 
-                            threatField.Field.IntegrityViolation = "нет изменений";
-                            threatField.UpdatedField.IntegrityViolation = "нет изменений";
+                            threatField.Fields.IntegrityViolation = "нет изменений";
+                            threatField.UpdatedFields.IntegrityViolation = "нет изменений";
 
-                            threatField.Field.AccessibilityViolation = "нет изменений";
-                            threatField.UpdatedField.AccessibilityViolation = "нет изменений";
+                            threatField.Fields.AccessibilityViolation = "нет изменений";
+                            threatField.UpdatedFields.AccessibilityViolation = "нет изменений";
 
                             if (list[updatedIds[i]].Name != updatedlist[updatedIds[i]].Name)
                             {
-
-
-                                threatField.Field.Name = list[updatedIds[i]].Name;
-                                threatField.UpdatedField.Name = updatedlist[updatedIds[i]].Name;
+                                threatField.Fields.Name = list[updatedIds[i]].Name;
+                                threatField.UpdatedFields.Name = updatedlist[updatedIds[i]].Name;
                             }
                             if (list[updatedIds[i]].Description != updatedlist[updatedIds[i]].Description)
                             {
-
-                                threatField.Field.Description = list[updatedIds[i]].Description;
-                                threatField.UpdatedField.Description = updatedlist[updatedIds[i]].Description;
+                                threatField.Fields.Description = list[updatedIds[i]].Description;
+                                threatField.UpdatedFields.Description = updatedlist[updatedIds[i]].Description;
                             }
                             if (list[updatedIds[i]].Source != updatedlist[updatedIds[i]].Source)
                             {
-
-
-                                threatField.Field.Source = list[updatedIds[i]].Source;
-                                threatField.UpdatedField.Source = updatedlist[updatedIds[i]].Source;
+                                threatField.Fields.Source = list[updatedIds[i]].Source;
+                                threatField.UpdatedFields.Source = updatedlist[updatedIds[i]].Source;
                             }
                             if (list[updatedIds[i]].Target != updatedlist[updatedIds[i]].Target)
                             {
-
-                                threatField.Field.Target = list[updatedIds[i]].Target;
-                                threatField.UpdatedField.Target = updatedlist[updatedIds[i]].Target;
+                                threatField.Fields.Target = list[updatedIds[i]].Target;
+                                threatField.UpdatedFields.Target = updatedlist[updatedIds[i]].Target;
                             }
                             if (list[updatedIds[i]].BreachOfConfid != updatedlist[updatedIds[i]].BreachOfConfid)
                             {
-
-                                threatField.Field.BreachOfConfid = list[updatedIds[i]].BreachOfConfid;
-                                threatField.UpdatedField.BreachOfConfid = updatedlist[updatedIds[i]].BreachOfConfid;
+                                threatField.Fields.BreachOfConfid = list[updatedIds[i]].BreachOfConfid;
+                                threatField.UpdatedFields.BreachOfConfid = updatedlist[updatedIds[i]].BreachOfConfid;
                             }
                             if (list[updatedIds[i]].IntegrityViolation != updatedlist[updatedIds[i]].IntegrityViolation)
                             {
-
-
-                                threatField.Field.IntegrityViolation = list[updatedIds[i]].IntegrityViolation;
-                                threatField.UpdatedField.IntegrityViolation = updatedlist[updatedIds[i]].IntegrityViolation;
+                                threatField.Fields.IntegrityViolation = list[updatedIds[i]].IntegrityViolation;
+                                threatField.UpdatedFields.IntegrityViolation = updatedlist[updatedIds[i]].IntegrityViolation;
                             }
                             if (list[updatedIds[i]].AccessibilityViolation != updatedlist[updatedIds[i]].AccessibilityViolation)
                             {
-
-                                threatField.Field.AccessibilityViolation = list[updatedIds[i]].AccessibilityViolation;
-                                threatField.UpdatedField.AccessibilityViolation = updatedlist[updatedIds[i]].AccessibilityViolation;
+                                threatField.Fields.AccessibilityViolation = list[updatedIds[i]].AccessibilityViolation;
+                                threatField.UpdatedFields.AccessibilityViolation = updatedlist[updatedIds[i]].AccessibilityViolation;
                             }
-
-
                         }
+                        //---------Если была добавлена новая запись---------
                         else if (!list.ContainsKey(updatedIds[i]))
                         {
-                            threatField.Field.Name = " - ";
-                            threatField.Field.Description = " - ";
-                            threatField.Field.Source = " - ";
-                            threatField.Field.Target = " - ";
-                            threatField.Field.BreachOfConfid = " - ";
-                            threatField.Field.IntegrityViolation = " - ";
-                            threatField.Field.AccessibilityViolation = " - ";
+                            threatField.Fields.Name = " - ";
+                            threatField.Fields.Description = " - ";
+                            threatField.Fields.Source = " - ";
+                            threatField.Fields.Target = " - ";
+                            threatField.Fields.BreachOfConfid = " - ";
+                            threatField.Fields.IntegrityViolation = " - ";
+                            threatField.Fields.AccessibilityViolation = " - ";
 
-
-                            threatField.UpdatedField.Name = updatedlist[updatedIds[i]].Name;
-                            threatField.UpdatedField.Description = updatedlist[updatedIds[i]].Description;
-                            threatField.UpdatedField.Source = updatedlist[updatedIds[i]].Source;
-                            threatField.UpdatedField.Target = updatedlist[updatedIds[i]].Target;
-                            threatField.UpdatedField.BreachOfConfid = updatedlist[updatedIds[i]].BreachOfConfid;
-                            threatField.UpdatedField.IntegrityViolation = updatedlist[updatedIds[i]].IntegrityViolation;
-                            threatField.UpdatedField.AccessibilityViolation = updatedlist[updatedIds[i]].AccessibilityViolation;
+                            threatField.UpdatedFields.Name = updatedlist[updatedIds[i]].Name;
+                            threatField.UpdatedFields.Description = updatedlist[updatedIds[i]].Description;
+                            threatField.UpdatedFields.Source = updatedlist[updatedIds[i]].Source;
+                            threatField.UpdatedFields.Target = updatedlist[updatedIds[i]].Target;
+                            threatField.UpdatedFields.BreachOfConfid = updatedlist[updatedIds[i]].BreachOfConfid;
+                            threatField.UpdatedFields.IntegrityViolation = updatedlist[updatedIds[i]].IntegrityViolation;
+                            threatField.UpdatedFields.AccessibilityViolation = updatedlist[updatedIds[i]].AccessibilityViolation;
                         }
+                        //---------Если существующая запись была удалена-----------
                         else if (!updatedlist.ContainsKey(updatedIds[i]))
                         {
+                            threatField.Fields.Name = list[updatedIds[i]].Name;
+                            threatField.Fields.Description = list[updatedIds[i]].Description;
+                            threatField.Fields.Source = list[updatedIds[i]].Source;
+                            threatField.Fields.Target = list[updatedIds[i]].Target;
+                            threatField.Fields.BreachOfConfid = list[updatedIds[i]].BreachOfConfid;
+                            threatField.Fields.IntegrityViolation = list[updatedIds[i]].IntegrityViolation;
+                            threatField.Fields.AccessibilityViolation = list[updatedIds[i]].AccessibilityViolation;
 
-
-                            threatField.Field.Name = list[updatedIds[i]].Name;
-                            threatField.Field.Description = list[updatedIds[i]].Description;
-                            threatField.Field.Source = list[updatedIds[i]].Source;
-                            threatField.Field.Target = list[updatedIds[i]].Target;
-                            threatField.Field.BreachOfConfid = list[updatedIds[i]].BreachOfConfid;
-                            threatField.Field.IntegrityViolation = list[updatedIds[i]].IntegrityViolation;
-                            threatField.Field.AccessibilityViolation = list[updatedIds[i]].AccessibilityViolation;
-
-                            threatField.UpdatedField.Name = "Запись удалена!";
-                            threatField.UpdatedField.Description = "Запись удалена!";
-                            threatField.UpdatedField.Source = "Запись удалена!";
-                            threatField.UpdatedField.Target = "Запись удалена!";
-                            threatField.UpdatedField.BreachOfConfid = "Запись удалена!";
-                            threatField.UpdatedField.IntegrityViolation = "Запись удалена!";
-                            threatField.UpdatedField.AccessibilityViolation = "Запись удалена!";
+                            threatField.UpdatedFields.Name = "Запись удалена!";
+                            threatField.UpdatedFields.Description = "Запись удалена!";
+                            threatField.UpdatedFields.Source = "Запись удалена!";
+                            threatField.UpdatedFields.Target = "Запись удалена!";
+                            threatField.UpdatedFields.BreachOfConfid = "Запись удалена!";
+                            threatField.UpdatedFields.IntegrityViolation = "Запись удалена!";
+                            threatField.UpdatedFields.AccessibilityViolation = "Запись удалена!";
 
                         }
                         updatedfields.Add(threatField);
-
-
                     }
                     UpdatedThreat.Visibility = Visibility.Visible;
-
                     UpdatedThreat.ItemsSource = updatedfields;
-                   
+
                 }
                 else
                 {
                     UpdatedThreat.Visibility = Visibility.Collapsed;
                 }
-                File.Delete(path);
-                File.Copy(Directory.GetCurrentDirectory() + "\\UpdatedThreatBase.xlsx", path);
+
+                //--------Перезаписываем файл ThreatBase и дату-время для запоминания последнего обновления до конца текущего сеанса программы-----------
+                File.Delete(Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx");
+                File.Copy(Directory.GetCurrentDirectory() + "\\UpdatedThreatBase.xlsx", Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx");
                 File.Delete(Directory.GetCurrentDirectory() + "\\UpdatedThreatBase.xlsx");
                 File.WriteAllText(Directory.GetCurrentDirectory() + "\\updatedate.txt", DateTime.Now.ToString());
+
+                //---------Обновляем данные---------
+                if (updatedlist.Count != 0)
+                {
+                    list.Clear();
+                    foreach (var item in updatedlist)
+                    {
+                        list.Add(item.Key, item.Value);
+                    }
+                }
+
                 UpdateDate.Text = "Последнее обновление: " + File.ReadAllText(Directory.GetCurrentDirectory() + "\\updatedate.txt");
                 StartMessage.Text = $"На вашем компьютере существует загруженная база угроз ИБ\n";
                 StartMessage.Text += $"Всего записей в базе данных: {list.Count}";
@@ -581,40 +593,28 @@ namespace ThreatDataBase
             }
             catch (Exception ex)
             {
-               
-                UpdateStatus.Text = "Ошибка!";
-                MessageBox.Show("Невозможно обновить базу данных!");
                 UpdateStatus.Visibility = Visibility.Visible;
                 UpdateMessage.Visibility = Visibility.Visible;
+                UpdateStatus.Text = "Ошибка!";
                 UpdateMessage.Text = ex.Message;
-            }
-            if (updatedlist.Count != 0)
-            {
-                list.Clear();
-                foreach (var item in updatedlist)
-                {
-                    list.Add(item.Key, item.Value);
-                }
-
-
+                MessageBox.Show("Невозможно обновить базу данных!");
             }
             updatedlist.Clear();
-           
-           
-
         }
 
-        static int min = 60;
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) // Запуск таймера автообновления при загрузке окна
         {
             var timer = new System.Windows.Threading.DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.IsEnabled = true;
-            timer.Tick += (o, t) => 
+
+            timer.Tick += (o, t) =>
             {
-                if (list.Count!=0)
+                if (list.Count != 0)
                 {
+                    min--;
                     if (min != 0)
                     {
 
@@ -628,24 +628,27 @@ namespace ThreatDataBase
                         UpdatedThreat.Visibility = Visibility.Collapsed;
 
                     }
-                    min--;
+
                 }
             };
             timer.Start();
+
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e) // Кнопка "Сохранить базу УБИ"
         {
-            if (File.Exists(path))
-            {
-                if (File.Exists(Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx"))
-                {
-                    File.Delete(Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx");
-                }
-                File.Copy(path, Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx");
-                File.Delete(path);
+            //------Если есть обновление, сохраняем его---------
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx"))
+            { 
+                File.Delete(Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx");
+                File.Copy(Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx", Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx");
+
+                File.Delete(Directory.GetCurrentDirectory() + "\\savedupdatedate.txt");
+                File.Copy(Directory.GetCurrentDirectory() + "\\updatedate.txt", Directory.GetCurrentDirectory() + "\\savedupdatedate.txt");
+
                 MessageBox.Show("База данных успешно сохраненa!");
-            }else if(File.Exists(Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx"))
+            }
+            else if (File.Exists(Directory.GetCurrentDirectory() + "\\SavedThreatBase.xlsx"))
             {
                 MessageBox.Show("Текущая версия базы данных уже сохранена");
             }
@@ -653,7 +656,8 @@ namespace ThreatDataBase
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            File.Delete(path);
+            File.Delete(Directory.GetCurrentDirectory() + "\\ThreatBase.xlsx");
+            File.Delete(Directory.GetCurrentDirectory() + "\\updatedate.txt");
         }
     }
 
