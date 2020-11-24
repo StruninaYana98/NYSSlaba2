@@ -595,9 +595,9 @@ namespace ThreatDataBase
             {
                 UpdateStatus.Visibility = Visibility.Visible;
                 UpdateMessage.Visibility = Visibility.Visible;
+                MessageBox.Show("Невозможно обновить базу данных!");
                 UpdateStatus.Text = "Ошибка!";
                 UpdateMessage.Text = ex.Message;
-                MessageBox.Show("Невозможно обновить базу данных!");
             }
             updatedlist.Clear();
         }
