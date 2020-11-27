@@ -161,7 +161,7 @@
             </TextBox.Effect>
         </TextBox>
         <TextBlock x:Name ="EnterIdMessage" HorizontalAlignment="Left" Margin="287,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="27" Width="313" Foreground="White" FontFamily="Tahoma" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2"><Run Text="Введите идентификатор угрозы"/><Run Text=":"/></TextBlock>
-        <DataGrid Name="View" IsReadOnly="True" HeadersVisibility="None"  Height="Auto" Margin="263,193,21,0" VerticalScrollBarVisibility="Hidden" FontFamily="Tahoma" FontSize="16" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A" Foreground="#FF0A132A"   BorderThickness="2,2,2,2"  AutoGenerateColumns="False" Grid.ColumnSpan="3" VerticalAlignment="Top">
+        <DataGrid Name="View" IsReadOnly="True" HeadersVisibility="None" ScrollViewer.CanContentScroll="False" Height="Auto" Margin="263,193,21,0" VerticalScrollBarVisibility="Hidden" FontFamily="Tahoma" FontSize="16" HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A" Foreground="#FF0A132A"   BorderThickness="2,2,2,2"  AutoGenerateColumns="False" Grid.ColumnSpan="3" VerticalAlignment="Top">
             <DataGrid.Columns >
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -206,7 +206,7 @@
             </Button.Effect>
         </Button>
 
-        <DataGrid x:Name="UpdatedThreat" IsReadOnly="True"  HeadersVisibility="None" AutoGenerateColumns="False"   Height="Auto" Margin="263,230,21,0"  HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A"  FontFamily="Tahoma"  FontSize="14" GridLinesVisibility="All" Grid.ColumnSpan="3" VerticalAlignment="Top" >
+        <DataGrid x:Name="UpdatedThreat" IsReadOnly="True" ScrollViewer.CanContentScroll="False" HeadersVisibility="None" AutoGenerateColumns="False"   Height="Auto" Margin="263,230,21,0"  HorizontalGridLinesBrush="#FFBC9CFF" VerticalGridLinesBrush="#FFBC9CFF"  BorderBrush="#FFBC9CFF" Background="#FF0A132A"  FontFamily="Tahoma"  FontSize="14" GridLinesVisibility="All" Grid.ColumnSpan="3" VerticalAlignment="Top" >
             <DataGrid.Columns >
                 <DataGridTemplateColumn Width="100">
                     <DataGridTemplateColumn.CellTemplate>
@@ -216,7 +216,7 @@
                     </DataGridTemplateColumn.CellTemplate>
 
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*">
+                <DataGridTemplateColumn  Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
